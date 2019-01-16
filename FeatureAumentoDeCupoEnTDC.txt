@@ -1,0 +1,90 @@
+Feature: Aumento de cupo en tarjeta de crédito
+
+As cliente quiero solicitar un aumento de cupo en mi tarjeta de crédito
+
+Scenario: No posee TDC
+    Given Usuario se encuentra registrado 
+    When Usuario no Posee TDC asociada
+    Then Seccion Aumentar Cupo no se encuentra disponible
+
+Scenario: No cumple tiempo de antigüedad 
+    Given Usuario se encuentra registrado 
+    When tiempo de registro es menor a tiempo de antigüedad
+    Then botón Aumentar Cupo esta Deshabilitado
+
+Scenario: Cupo No aumentado
+    Given Usuario ingreso monto a solicitar 
+    And confirma aumento de cupo
+    When cupo de tarjeta no fue aumentado
+    Then muestra cupo de la tarjeta igual al monto anterior 
+    And muestra mensaje comuníquese con nuestros operadores o acérquese a nuestra sucursal más cercana
+
+Scenario: No ingresa monto para aumento de cupo
+    Given Usuario no ingreso monto a solicitar 
+    When presiona aceptar
+    Then muestra mensaje por favor ingrese monto de cupo 
+
+Scenario: Cancelar aumento de cupo al confirmar monto
+    Given Usuario ingreso monto a solicitar 
+    And presiona aceptar
+    When presiona cancelar en la pantalla de confirmación
+    Then muestra página de aumento de cupo
+
+Scenario: Monto Excede límite de préstamo
+    Given Usuario se encuentra registrado
+    When monto solicitado es superior a monto limite
+    And presiona aceptar
+    Then muestra mensaje el monto solicitado es superior al monto límite de préstamo, por favor introduzca un monto menor o acérquese a nuestra sucursal más cercana
+
+Scenario: Monto solicitado es menor al monto disponible
+    Given Usuario ingresa monto de cupo menor a monto disponible
+    When presiona aceptar
+    Then muestra mensaje por favor ingrese monto de cupo superior a monto disponible
+
+Scenario: Usuario con Deudas en pagos
+    Given Usuario se encuentra registrado
+    When ingreso información de monto solicitado
+    And presiona aceptar
+    And deudas es mayor a tiempo de morosidad  
+    Then muestra mensaje no cumple con los requisitos solicitados por favor comuníquese con nuestros ejecutivos
+
+Scenario: Usuario en Lista de morosidad
+    Given Usuario se encuentra registrado
+    When ingreso información de monto solicitado
+    And presiona aceptar
+    And usuario existe en lista morosidad 
+    Then muestra mensaje no cumple con los requisitos solicitados por favor comuníquese con nuestros ejecutivos
+
+Scenario: Usuario con Antecedentes
+    Given Usuario se encuentra registrado
+    When ingreso información de monto solicitado
+    And presiona aceptar
+    And usuario muestra antecedentes  
+    Then muestra mensaje no cumple con los requisitos solicitados por favor comuníquese con nuestros ejecutivos
+
+Scenario: Usuario supera edad permitida
+    Given Usuario se encuentra registrado
+    When ingreso información de monto solicitado
+    And presiona aceptar
+    And usuario tiene edad mayor a años limite  
+    Then muestra mensaje no cumple con los requisitos solicitados por favor comuníquese con nuestros ejecutivos
+
+Scenario: Aumento de Cupo Exitoso
+    Given Usuario se encuentra registrado
+    When ingreso a la página aumento de cupo
+    And ingreso información de monto solicitado
+    Then Se aumenta cupo en Tarjeta de Crédito
+    And Se muestra mensaje de aumento de cupo realizado con éxito
+
+
+Data de Prueba 
+
+Rut	                                   Monto solicitado	- Monto Máximo Disponible - Monto Mínimo
+Usuario con una semana en el Registro	   	
+Usuario con deuda de pago de cuota	        1000000	            1100000	
+Usuario con registro en lista de morosidad  1000000             1100000	
+Usuario con registro de antecedentes	    1000000	            1100000	
+Usuario con edad superior al 
+límite de años permitidos	                1000000	            1100000	
+Usuario sin deudas	                        200	                1100000	                1000000
+Usuario sin deudas	                        1500000	            1100000	

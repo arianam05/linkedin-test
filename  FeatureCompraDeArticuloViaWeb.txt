@@ -1,0 +1,106 @@
+Feature: Compra de articulo vía Web
+
+As cliente quiero realizar una compra a través de la página web
+
+Scenario: Seleccionar producto y seguir comprando
+    Given Usuario Selecciono Producto
+    When hace clic en seguir comprando
+    Then vuelve a la pagina anterior 
+    And agrega un producto al carrito
+
+Scenario: Tarjeta de Pago sin cupo disponible
+    Given Usuario Selecciono Producto
+    When ingresa datos de tarjeta 
+    Then valida depósito de pago
+    And envía mensaje indicando que el cobro del producto no puede ser procesado monto no disponible
+
+Scenario: Stock no disponible
+    Given Usuario Selecciono Producto
+    When cantidad de producto es menor a stock 
+    Then Muestra mensaje no existe cantidad de producto solicitada
+
+Scenario: Eliminar Producto de carrito
+    Given Usuario Selecciono Producto
+    When hace clic en eliminar producto 
+    Then muestra el carrito de compras sin el producto eliminado
+    And Monto de compra menor actualizado
+
+Scenario: Perdida de conexión al hacer clic en comprar
+    Given Usuario Selecciono Producto
+    When hace clic comprar
+    And conexión no existe
+    Then muestra mensaje no se puede realizar compra intente nuevamente
+
+Scenario: Codigo de descuento no existe
+    Given Usuario Selecciono Producto
+    When ingresa código de descuento
+    And Valida código de descuento
+    Then muestra mensaje código de descuento no existe
+
+Scenario: No realiza Pago en efectivo
+    Given Usuario Selecciono Producto
+    When Selecciona Pago en efectivo
+    And fecha de pago expira
+    Then compra se muestra como vencida
+    And enviar mensaje a email indicando que la fecha de pago a expirado
+
+Scenario: Usuario No registrado
+    Given Usuario Selecciono Producto
+    When Selecciona comprar
+    Then muestra pantalla de inicio de sesión 
+
+Scenario: Indicar No ser usuario Registrado
+    Given Usuario Selecciono Producto
+    When selecciona no soy usuario registrado
+    Then muestra pantalla de inicio de sesión 
+
+Scenario: Seleccionar Producto con descuento vencido 
+    Given Usuario Selecciono Producto 
+    When descuento de producto vencido 
+    And presiona comprar
+    Then muestra resumen de compra con total sin descuento 
+
+Scenario: Seleccionar producto guardado sin stock
+    Given Usuario Selecciono Producto guardado 
+    When stock producto igual a cero
+    Then mensaje producto no disponible en el stock, desea eliminar de lista de guardados? 
+
+Scenario: Seleccionar producto duplicado
+    Given Usuario Selecciono Producto 
+    When producto existe en el carrito
+    Then muestra mensaje indicando producto ya seleccionado, desea aumentar la cantidad del producto?
+
+Scenario: Reducir cantidad de producto luego de agregar al carrito
+    Given Usuario se encuentra en sección mi carrito  
+    When disminuye cantidad de producto
+    Then muesta nueva cantidad de producto
+    And muestra total actualizado
+
+Scenario: Usuario hace click en logout cuando posee productos en el carro 
+    Given Usuario se encuentra en sección mi carrito  
+    When selecciona logout
+    Then muestra mensaje desea culminar compra y cerrar sesión?
+
+Scenario: Usuario cierra página cuando posee productos en el carro 
+    Given Usuario se encuentra en sección mi carrito  
+    When hace clic cerrar pagina
+    Then cierra sesion
+    And carrito guarda productos
+
+Scenario: Usuario hace click en logout cuando se encuentra en la sección de pago 
+    Given Usuario se encuentra en sección de pago  
+    When selecciona logout
+    Then muestra mensaje desea culminar compra y cerrar sesión?
+
+Scenario: Usuario hace click en logout cuando se encuentra en la sección de pago
+    Given Usuario se encuentra en sección de pago  
+    When hace clic cerrar pagina
+    Then cierra sesión
+    And elimina compra 
+    And carrito guarda productos
+
+
+Data de Prueba:
+    Usuario Registrado
+    Numero Tarjeta de Pago sin monto disponible
+    Código de Descuento no existente
