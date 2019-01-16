@@ -15,7 +15,7 @@ Feature: Searching for TestCafe on GitHub
 
   Scenario: Add new experience without correct data
     Given I open the Linkedin page
-    When I am typing my login "suarezcumare@gmail.com" and password "t0N!.27LN" on Linkedin
+    When I am typing my login "real_email_linkedin@gmail.com" and password "rela_password" on Linkedin
     And I am pressing enter key on Linkedin
     And I go to my profile on Linkedin
     And I click in more experience on Linkedin
@@ -25,7 +25,7 @@ Feature: Searching for TestCafe on GitHub
 
   Scenario: Add new experience without correct data
     Given I open the Linkedin page
-    When I am typing my login "suarezcumare@gmail.com" and password "t0N!.27LN" on Linkedin
+    When I am typing my login "real_email_linkedin@gmail.com" and password "rela_password" on Linkedin
     And I am pressing enter key on Linkedin
     And I go to my profile on Linkedin
     And I click in more experience on Linkedin

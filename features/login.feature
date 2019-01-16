@@ -4,7 +4,7 @@ Feature: Searching for TestCafe on GitHub
 
   Scenario: Login with an existing user
     Given I open the Linkedin page
-    When I am typing my login "suarezcumare@gmail.com" and password "t0N!.27LN" on Linkedin
+    When I am typing my login "rela_email@gmail.com" and password "rela_password" on Linkedin
     And I am pressing enter key on Linkedin
     Then I should be inside linkedin
 

@@ -4,7 +4,7 @@ Feature: Searching for TestCafe on GitHub
 
   Scenario: Search a profile a linkedin
     Given I open the Linkedin page
-    When I am typing my login "suarezcumare@gmail.com" and password "t0N!.27LN" on Linkedin
+    When I am typing my login "real_email@gmail.com" and password "rela_password" on Linkedin
     And I am pressing enter key on Linkedin
     And I search a profile of "Ariana Mendez" on Linkedin
     And I am pressing enter key on Linkedin
@@ -13,7 +13,7 @@ Feature: Searching for TestCafe on GitHub
 
   Scenario: Search a profile a linkedin without results
     Given I open the Linkedin page
-    When I am typing my login "suarezcumare@gmail.com" and password "t0N!.27LN" on Linkedin
+    When I am typing my login "real_email@gmail.com" and password "rela_password" on Linkedin
     And I am pressing enter key on Linkedin
     And I search a profile of "asd asd asd asd aa aasad asdasd asdasd as dasd asd" on Linkedin
     And I am pressing enter key on Linkedin
